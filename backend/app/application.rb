@@ -27,13 +27,13 @@ class Application
       begin
           member = Member.find(id)
           return [200, { 'Content-Type' => 'application/json' }, [member.to_json]]
-      rescue
-          return [404, {'Content-Type' => 'application/json' }, [{message: "Member not found."}.to_json]]
+      rescue Exception => e
+            logger.error e.message
+            e.backtrace.each { |line| logger.error line }
       end
 
     end
-    
-    
+        
     # member update route
 
     if req.path.match('/members/') && req.patch?
@@ -41,10 +41,11 @@ class Application
       body = JSON.parse(req.body.read)
       begin
           member = Member.find(id)
-          member.find.update(body)
+          member.update(body)
           return [202, { 'Content-Type' => 'application/json' }, [member.to_json]]
-      rescue
-          return [404, {'Content-Type' => 'application/json' }, [{message: "Member could not be updated."}.to_json]]
+      rescue Exception => e
+        logger.error e.message
+        e.backtrace.each { |line| logger.error line }
       end
     end
     
@@ -56,8 +57,9 @@ class Application
           member = Member.find(id)
           member.destroy
           return [200, { 'Content-Type' => 'application/json' }, [{message: "Member removed."}.to_json]]
-      rescue
-          return [404, {'Content-Type' => 'application/json' }, [{message: "Member not found."}.to_json]]
+      rescue Exception => e
+        logger.error e.message
+        e.backtrace.each { |line| logger.error line }
       end
 
     end
@@ -86,23 +88,24 @@ class Application
       begin
           comment = Comment.find(id)
           return [200, { 'Content-Type' => 'application/json' }, [comment.to_json]]
-      rescue
-          return [404, {'Content-Type' => 'application/json' }, [{message: "Comment not found."}.to_json]]
+      rescue Exception => e
+        logger.error e.message
+        e.backtrace.each { |line| logger.error line }
       end
-
     end
 
     # Comment update
 
-    if req.path.match('/comment/') && req.patch?
+    if req.path.match('/comments/') && req.patch?
       id = req.path.split('/')[2]
       body = JSON.parse(req.body.read)
       begin
           comment = Comment.find(id)
-          comment.find.update(body)
+          comment.update(body)
           return [202, { 'Content-Type' => 'application/json' }, [comment.to_json]]
-      rescue
-          return [404, {'Content-Type' => 'application/json' }, [{message: "Comment could not be updated."}.to_json]]
+      rescue Exception => e
+        logger.error e.message
+        e.backtrace.each { |line| logger.error line }
       end
     end
 
@@ -114,10 +117,10 @@ class Application
           comment = Comment.find(id)
           comment.destroy
           return [200, { 'Content-Type' => 'application/json' }, [{message: "Comment removed."}.to_json]]
-      rescue
-          return [404, {'Content-Type' => 'application/json' }, [{message: "Comment not found."}.to_json]]
+      rescue Exception => e
+        logger.error e.message
+        e.backtrace.each { |line| logger.error line }
       end
-
     end
     
     #BOOK ROUTES
@@ -143,8 +146,9 @@ class Application
       begin
           book = Book.find(id)
           return [200, { 'Content-Type' => 'application/json' }, [book.to_json]]
-      rescue
-          return [404, {'Content-Type' => 'application/json' }, [{message: "Book not found."}.to_json]]
+      rescue Exception => e
+        logger.error e.message
+        e.backtrace.each { |line| logger.error line }
       end
 
     end
@@ -156,10 +160,11 @@ class Application
       body = JSON.parse(req.body.read)
       begin
           book = Book.find(id)
-          book.find.update(body)
+          book.update(body)
           return [202, { 'Content-Type' => 'application/json' }, [book.to_json]]
-      rescue
-          return [404, {'Content-Type' => 'application/json' }, [{message: "Book could not be updated."}.to_json]]
+      rescue Exception => e
+        logger.error e.message
+        e.backtrace.each { |line| logger.error line }
       end
     end
 
@@ -171,10 +176,10 @@ if req.path.match('/books/') && req.delete?
           book = Book.find(id)
           book.destroy
           return [200, { 'Content-Type' => 'application/json' }, [{message: "Book removed."}.to_json]]
-      rescue
-          return [404, {'Content-Type' => 'application/json' }, [{message: "Book not found."}.to_json]]
+      rescue Exception => e
+        logger.error e.message
+        e.backtrace.each { |line| logger.error line }
       end
-
     end
 
 
