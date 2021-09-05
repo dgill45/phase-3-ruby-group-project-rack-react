@@ -1,4 +1,4 @@
 class Member < ActiveRecord::Base
-    has_many :books
-    has_many :comments, through: :books
+    has_many :comments,
+    has_many :books, through: :comments
 end
